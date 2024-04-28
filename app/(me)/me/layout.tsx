@@ -2,15 +2,15 @@ import React, { ReactNode } from 'react';
 
 export default function MeLayout({
   children,
-  modal,
+  detailModal,
 }: {
   children: ReactNode;
-  modal: ReactNode;
+  detailModal: ReactNode;
 }) {
   return (
     <>
       {children}
-      {modal}
+      {detailModal}
     </>
   );
 }
