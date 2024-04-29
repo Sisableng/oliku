@@ -1,4 +1,8 @@
-import NextAuth, { User, type DefaultSession } from 'next-auth';
+import NextAuth, {
+  CredentialsSignin,
+  User,
+  type DefaultSession,
+} from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import { compareHashPassword } from '@/utils/password';
@@ -20,6 +24,7 @@ declare module 'next-auth' {
 
 declare module 'next-auth/jwt' {
   interface JWT {
+    image: string | null | undefined;
     username: string;
   }
 }
@@ -48,8 +53,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         user = await getUserFromDb(credentials.username);
 
         if (!user) {
-          // No user found, so this is their first attempt to login
-          // meaning this is also the place you could do registration
           throw new Error('User not found.');
         }
 
@@ -76,8 +79,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
   callbacks: {
     jwt({ token, user, session, trigger }) {
-      if (trigger === 'update' && session?.name) {
+      if (trigger === 'update' && session) {
+        token.username = session.username;
+        token.email = session.email;
         token.name = session.name;
+        token.image = session.image;
       }
 
       if (user) {
@@ -86,20 +92,24 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         return {
           ...token,
           username: user.username,
+          email: user.email,
+          name: user.name,
           image: user.image,
         };
       }
       return token;
     },
-    async session({ session, token }) {
+    session({ session, token }) {
       // Asserting `token.id` is a string based on the previous callback.
       session.user.id = token.id as string;
       return {
         ...session,
         user: {
           ...session.user,
-          name: token.name,
           username: token.username,
+          email: token.email,
+          name: token.name,
+          image: token.image,
         },
       };
     },

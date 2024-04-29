@@ -22,7 +22,8 @@ import { useNRouter } from '@/lib/progressbar/useNRouter';
 
 import { useSearchParams } from 'next/navigation';
 import { signInServer } from '@/app/(main)/auth/actions';
-import { signIn } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
+import Link from 'next/link';
 
 const passwordSchema = z
   .string()
@@ -55,6 +56,7 @@ const formSchema = z.object({
 
 export default function FormSignin() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const { data: session } = useSession();
 
   const router = useNRouter();
   const searchParams = useSearchParams();
@@ -79,16 +81,37 @@ export default function FormSignin() {
         callbackUrl,
       });
 
-      // console.log(res);
-      if (res?.status === 200) {
+      console.log(res);
+      if (!res?.error) {
         toast.success('Selamat Datang!', {
           id: toastId,
         });
         router.push('/me');
       } else {
-        toast.error('Sepertinya ada yang salah, silahkan coba lagi.', {
-          id: toastId,
-        });
+        switch (res.error) {
+          case 'Invalid Password':
+            form.setError('password', {
+              message: 'Password Salah',
+            });
+            toast.warning('Password Salah', {
+              id: toastId,
+            });
+            break;
+          case 'User not found':
+            form.setError('username', {
+              message: 'User tidak ditemukan',
+            });
+            toast.error('User tidak ditemukan', {
+              id: toastId,
+            });
+            break;
+
+          default:
+            toast.error('Sepertinya ada yang salah, silahkan coba lagi.', {
+              id: toastId,
+            });
+            break;
+        }
       }
     } catch (error) {
       console.log(error);
@@ -102,57 +125,79 @@ export default function FormSignin() {
     setShowPassword(!showPassword);
   };
 
+  const forceHardPush = () => {
+    const { protocol, host } = window.location;
+    window.location.href = `${protocol}//${host}/me`;
+  };
+
   return (
     <div>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
-          <FormField
-            control={form.control}
-            name='username'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Username</FormLabel>
-                <FormControl>
-                  <Input placeholder='shadcn' {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name='password'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Password</FormLabel>
-                <FormControl>
-                  <div className='flex items-center gap-2'>
-                    <Input
-                      type={showPassword ? 'text' : 'password'}
-                      placeholder='Password'
-                      autoComplete='off'
-                      {...field}
-                    />
-                    <Button
-                      type='button'
-                      size={'icon'}
-                      variant={showPassword ? 'default' : 'secondary'}
-                      onClick={toggleShowPassword}
-                    >
-                      {showPassword ? <Eye size={16} /> : <EyeOff size={16} />}
-                    </Button>
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <Button type='submit' className='w-full' disabled={isSubmitting}>
-            Masuk
+      {session ? (
+        <div className='space-y-2 text-center'>
+          <h3>Kamu akan segera dialihkan.</h3>
+          <Button
+            variant={'link'}
+            onClick={forceHardPush}
+            className='text-primary underline'
+          >
+            Klik disini jika terlalu lama
           </Button>
-        </form>
-      </Form>
+        </div>
+      ) : (
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
+            <FormField
+              control={form.control}
+              name='username'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Username</FormLabel>
+                  <FormControl>
+                    <Input placeholder='shadcn' {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name='password'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <div className='flex items-center gap-2'>
+                      <Input
+                        type={showPassword ? 'text' : 'password'}
+                        placeholder='Password'
+                        autoComplete='off'
+                        {...field}
+                      />
+                      <Button
+                        type='button'
+                        size={'icon'}
+                        variant={showPassword ? 'default' : 'secondary'}
+                        onClick={toggleShowPassword}
+                      >
+                        {showPassword ? (
+                          <Eye size={16} />
+                        ) : (
+                          <EyeOff size={16} />
+                        )}
+                      </Button>
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <Button type='submit' className='w-full' disabled={isSubmitting}>
+              Masuk
+            </Button>
+          </form>
+        </Form>
+      )}
     </div>
   );
 }

@@ -18,6 +18,7 @@ import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 import clsx from 'clsx';
+import { Lock, LogOut, UserRound } from 'lucide-react';
 const ToggleDarkMode = dynamic(() => import('@/components/ToggleDarkMode'), {
   ssr: false,
 });
@@ -26,6 +27,8 @@ export default function Navbar() {
   const [activeNav, setActiveNav] = useState(false);
   const { data: session } = useSession();
   const name = getInitialName(session?.user?.name ?? 'USER');
+
+  // console.log(session);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -58,11 +61,18 @@ export default function Navbar() {
           <h4 className='text-2xl font-bold'>Oliku</h4>
         </Link>
         <div className='flex items-center gap-4 rounded-l-full rounded-r-full bg-card p-2 shadow-lg'>
-          <Input
+          <p className='pl-3 text-sm text-muted-foreground max-sm:hidden'>
+            {new Date().toLocaleDateString('id', {
+              day: 'numeric',
+              month: 'short',
+              year: 'numeric',
+            })}
+          </p>
+          {/* <Input
             type='text'
             placeholder='Search...'
             className='h-auto max-w-40 rounded-l-full rounded-r-full bg-slate-100 p-1 px-3 dark:bg-slate-800'
-          />
+          /> */}
           <ToggleDarkMode className='h-8 w-8 rounded-full' />
           <DropdownMenu modal={false}>
             <DropdownMenuTrigger>
@@ -75,14 +85,29 @@ export default function Navbar() {
               <DropdownMenuLabel>Akun</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem asChild className='cursor-pointer'>
-                <Link href={'/me/profile'}>Profil</Link>
+                <Link href={'/me/profile'} className='flex items-center gap-3'>
+                  <UserRound size={14} className='text-white/50' />
+                  <span>Profil</span>
+                </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem>Pengaturan</DropdownMenuItem>
+              <DropdownMenuItem asChild className='cursor-pointer'>
+                <Link
+                  href={'/me/profile/security'}
+                  className='flex items-center gap-3'
+                >
+                  <Lock size={14} className='text-white/50' />
+                  <span>Keamanan</span>
+                </Link>
+              </DropdownMenuItem>
               <DropdownMenuItem
+                asChild
                 className='cursor-pointer text-destructive focus:text-destructive'
                 onClick={() => signOut()}
               >
-                Keluar
+                <div className='flex items-center gap-3'>
+                  <LogOut size={14} className='text-white/50' />
+                  <span>Keluar</span>
+                </div>
               </DropdownMenuItem>
               <DropdownMenuArrow className='fill-border' />
             </DropdownMenuContent>

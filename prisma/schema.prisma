@@ -22,6 +22,7 @@ model User {
    
   emailVerified DateTime?
   image         String?
+  imageId       String?
   role          Role            @default(USER)
  
   createdAt     DateTime        @default(now())

@@ -1,6 +1,6 @@
 'use client';
 import { Button } from '@/components/ui/button';
-import { Home, List, Plus } from 'lucide-react';
+import { Home, Plus, UserRound } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
 
@@ -35,8 +35,8 @@ export default function FlyoutMenu() {
           className='rounded-full'
           asChild
         >
-          <Link href={'/me'}>
-            <List size={20} />
+          <Link href={'/me/profile'}>
+            <UserRound size={20} />
           </Link>
         </Button>
       </div>

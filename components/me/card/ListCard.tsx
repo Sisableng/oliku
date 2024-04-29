@@ -28,6 +28,7 @@ import {
 import { DropdownMenuArrow } from '@radix-ui/react-dropdown-menu';
 import { optimized } from '@/utils/optimized';
 import Link from 'next/link';
+import clsx from 'clsx';
 
 interface ListCardProps {
   data: List;
@@ -43,7 +44,7 @@ const ListCard = ({ data, onUpdate, onDelete }: ListCardProps) => {
   });
   return (
     <div className='grid grid-cols-1 gap-4 md:grid-cols-3'>
-      <div className='h-full w-full overflow-hidden rounded-xl bg-card max-sm:max-h-40'>
+      <div className='h-full max-h-40 w-full overflow-hidden rounded-xl bg-muted dark:bg-card md:max-h-60'>
         <Image
           src={optimized(data.cover ?? '', 250)}
           width={500}
@@ -54,7 +55,7 @@ const ListCard = ({ data, onUpdate, onDelete }: ListCardProps) => {
       </div>
       <Card className='relative md:col-span-2'>
         <CardHeader className='relative'>
-          <CardTitle className='line-clamp-2 max-w-xl'>
+          <CardTitle className='line-clamp-2 max-w-[16rem] md:max-w-xl'>
             {data.vehicleName}
           </CardTitle>
           <div className='flex items-center gap-2 text-sm text-muted-foreground'>
@@ -98,7 +99,7 @@ const ListCard = ({ data, onUpdate, onDelete }: ListCardProps) => {
           </div>
         </CardHeader>
         <CardContent className='grid grid-cols-2 gap-6'>
-          <ItemCard title='Merek Oli'>
+          <ItemCard title='Merek Oli' className='max-sm:col-span-2'>
             <div className='flex items-center gap-2'>
               <Wrench size={16} className='text-muted-foreground' />
               <p>{data.oilType}</p>
@@ -136,12 +137,13 @@ const ListCard = ({ data, onUpdate, onDelete }: ListCardProps) => {
 interface ItemCardProps {
   title: string;
   children: ReactNode;
+  className?: string;
 }
-const ItemCard = ({ title, children }: ItemCardProps) => {
+const ItemCard = ({ title, children, className }: ItemCardProps) => {
   return (
-    <div className='space-y-1'>
+    <div className={clsx('space-y-1', className)}>
       <p className='text-sm text-muted-foreground'>{title}</p>
-      <div className='max-sm:text-sm'>{children}</div>
+      <div className='text-sm'>{children}</div>
     </div>
   );
 };

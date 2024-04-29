@@ -44,6 +44,7 @@ import { toast } from 'sonner';
 import { updateList, deleteLists } from '@/app/(me)/me/lists/actions';
 import { useRouter } from 'next/navigation';
 import LoadingCard from './card/LoadingCard';
+import { removeImages } from '@/helper/cloudinaryHelper';
 
 const ListCard = dynamic(() => import('@/components/me/card/ListCard'), {
   ssr: false,
@@ -120,6 +121,21 @@ export default function Lists({ data }: ListsProps) {
     try {
       const req = await deleteLists(ids);
       if (req) {
+        if (data) {
+          const coverIds: string[] = data
+            .filter((item) => ids.includes(item.id))
+            .filter(
+              (item) =>
+                item.coverId !== null &&
+                item.coverId.toLocaleLowerCase().includes('list')
+            )
+            .map((item) => item.coverId!);
+
+          if (coverIds.length > 0) {
+            await removeImages(coverIds);
+          }
+        }
+
         toast.success('Berhasil dihapus', {
           id: toastId,
         });
