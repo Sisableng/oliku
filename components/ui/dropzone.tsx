@@ -59,7 +59,7 @@ export default function Dropzone({
         onDrop(acceptedFiles);
       }
     },
-    [onDrop]
+    [onDrop, maxFileSize, maxFiles]
   );
 
   const {

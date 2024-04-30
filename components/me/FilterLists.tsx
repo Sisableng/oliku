@@ -57,7 +57,7 @@ export default function FilterLists() {
     } else {
       router.push(`/me`);
     }
-  }, [debouncedValue, searchParams]);
+  }, [debouncedValue, searchParams, createQueryString, pathname, router]);
 
   return (
     <div className='flex items-center gap-4 md:justify-between'>

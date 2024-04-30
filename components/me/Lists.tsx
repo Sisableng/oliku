@@ -113,7 +113,7 @@ export default function Lists({ data }: ListsProps) {
         });
       }
     },
-    [selectedId]
+    [selectedId, router]
   );
 
   async function handleDelete(ids: string[]) {
