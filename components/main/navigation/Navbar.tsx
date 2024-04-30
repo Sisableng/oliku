@@ -74,7 +74,7 @@ export default function Navbar() {
               />
               <h3 className='text-2xl font-bold'>Oliku</h3>
             </Link>
-            <div>
+            {/* <div>
               <ul className='flex items-center gap-4'>
                 {menus.map((menu) => (
                   <li key={menu.uid}>
@@ -90,12 +90,12 @@ export default function Navbar() {
                   </li>
                 ))}
               </ul>
-            </div>
+            </div> */}
           </div>
           <div className='flex items-center gap-4'>
             <ToggleDarkMode />
             {session ? (
-              <Button asChild>
+              <Button asChild variant={'secondary'}>
                 <Link href={'/me'}>Dashboard</Link>
               </Button>
             ) : (

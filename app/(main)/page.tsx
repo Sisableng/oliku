@@ -1,10 +1,9 @@
-'use client';
+import InstallPWAButton from '@/components/main/InstallPWAButton';
 import { Button } from '@/components/ui/button';
-import { useSession } from 'next-auth/react';
+import { Github, Instagram, Linkedin } from 'lucide-react';
 import Link from 'next/link';
 
 export default function Home() {
-  const { data: session } = useSession();
   return (
     <div className='space-y-20'>
       <section
@@ -17,17 +16,32 @@ export default function Home() {
           <h1 className='text-4xl font-bold lg:text-6xl'>
             Selamat datang di <span className='text-primary'>Oliku</span>!
           </h1>
-          <p className='mx-auto max-w-lg font-semibold'>
+          <p className='mx-auto text-muted-foreground max-sm:px-10 max-sm:text-sm md:max-w-lg md:font-semibold'>
             Oliku adalah aplikasi pengingat ganti oli buat kamu yang sering
             lupa, Oliku dibuat dengan Next.js dan Tailwind CSS.
           </p>
-          <Button size={'lg'} className='mx-auto w-max' asChild>
-            {session ? (
-              <Link href={'/me'}>Dashboard</Link>
-            ) : (
-              <Link href={'/auth/signup'}>Mulai Sekarang!</Link>
-            )}
-          </Button>
+          <InstallPWAButton />
+
+          <div className='flex items-center justify-center gap-4 px-10'>
+            <Button asChild size={'icon'} variant={'ghost'}>
+              <Link href='https://github.com/Sisableng' target='_blank'>
+                <Github size={18} />
+              </Link>
+            </Button>
+            <Button asChild size={'icon'} variant={'ghost'}>
+              <Link
+                href='https://www.linkedin.com/in/wildanm2/'
+                target='_blank'
+              >
+                <Linkedin size={18} />
+              </Link>
+            </Button>
+            <Button asChild size={'icon'} variant={'ghost'}>
+              <Link href='https://instagram.com/wldnm2' target='_blank'>
+                <Instagram size={18} />
+              </Link>
+            </Button>
+          </div>
         </div>
 
         <div className='pointer-events-none absolute inset-x-0 top-0 h-52 bg-gradient-to-b from-background to-transparent' />
