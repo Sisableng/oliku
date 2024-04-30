@@ -195,6 +195,16 @@ export default function FormSignin() {
             <Button type='submit' className='w-full' disabled={isSubmitting}>
               Masuk
             </Button>
+
+            <div className='text-center text-sm'>
+              <p>
+                Belum punya akun?{' '}
+                <Link href='/auth/signup' className='text-primary underline'>
+                  Daftar
+                </Link>{' '}
+                sekarang.
+              </p>
+            </div>
           </form>
         </Form>
       )}

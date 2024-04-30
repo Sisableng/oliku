@@ -44,7 +44,7 @@ const ListCard = ({ data, onUpdate, onDelete }: ListCardProps) => {
   });
   return (
     <div className='grid grid-cols-1 gap-4 md:grid-cols-3'>
-      <div className='h-full max-h-40 w-full overflow-hidden rounded-xl bg-muted dark:bg-card md:max-h-60'>
+      <div className='h-full max-h-52 w-full overflow-hidden rounded-xl bg-muted dark:bg-card md:max-h-60'>
         <Image
           src={optimized(data.cover ?? '', 250)}
           width={500}

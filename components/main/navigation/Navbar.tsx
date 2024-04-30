@@ -40,7 +40,7 @@ export default function Navbar() {
       <nav className='container fixed inset-x-0 top-0 flex h-20 items-center justify-between'>
         <button
           className='group flex items-center gap-3 transition-colors ease-in-out hover:text-primary md:text-white'
-          onClick={() => router.back()}
+          onClick={() => router.push('/')}
         >
           <span className='grid h-8 w-8 place-content-center rounded-lg text-slate-800 transition-colors ease-in-out group-hover:bg-primary group-hover:text-white md:bg-white'>
             <ChevronLeft />

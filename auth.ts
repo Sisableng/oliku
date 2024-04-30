@@ -1,8 +1,4 @@
-import NextAuth, {
-  CredentialsSignin,
-  User,
-  type DefaultSession,
-} from 'next-auth';
+import NextAuth, { type DefaultSession } from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import { compareHashPassword } from '@/utils/password';
