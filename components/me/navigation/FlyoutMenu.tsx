@@ -6,8 +6,8 @@ import React from 'react';
 
 export default function FlyoutMenu() {
   return (
-    <div className='fixed inset-x-0 bottom-6 z-50 mx-auto w-max'>
-      <div className='flex items-center rounded-l-full rounded-r-full bg-slate-100 p-2 shadow-lg dark:bg-card'>
+    <div className='fixed inset-x-0 bottom-3 z-50 mx-auto w-max'>
+      <div className='flex items-center rounded-l-full rounded-r-full bg-slate-100 p-2 shadow-lg backdrop-blur dark:bg-slate-900/50'>
         <Button
           variant={'ghost'}
           size={'icon'}

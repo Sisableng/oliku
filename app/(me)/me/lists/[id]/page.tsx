@@ -6,6 +6,8 @@ import { ChevronLeft, Dot, Gauge, Wrench } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { Separator } from '@/components/ui/separator';
+import DeleteButton from './components/DeleteButton';
 
 export const metadata = {
   title: 'Detail',
@@ -34,21 +36,23 @@ export default async function ListDetailPage({
 
   return (
     <div className='space-y-10'>
-      <Button asChild variant={'ghost'}>
+      {/* <Button asChild variant={'ghost'}>
         <Link href='/me' className='flex items-center gap-2'>
           <ChevronLeft size={16} />
           <span>Kembali</span>
         </Link>
-      </Button>
+      </Button> */}
       <div className='grid grid-cols-1 gap-10 md:grid-cols-3'>
-        <div className='h-full max-h-40 w-full overflow-hidden rounded-xl bg-card md:max-h-60'>
-          <Image
-            src={optimized(data.cover ?? '', 250)}
-            width={500}
-            height={500}
-            alt='cover image'
-            className='h-full w-full object-contain'
-          />
+        <div>
+          <div className='h-60 w-full overflow-hidden rounded-xl bg-card md:max-h-96'>
+            <Image
+              src={optimized(data.cover ?? '', 250)}
+              width={500}
+              height={500}
+              alt='cover image'
+              className='h-full w-full object-contain'
+            />
+          </div>
         </div>
         <div className='md:col-span-2'>
           <div className='relative space-y-6 md:col-span-2'>
@@ -91,6 +95,17 @@ export default async function ListDetailPage({
                 </div>
               </ItemCard>
             </div>
+
+            <Separator />
+
+            <div className='flex items-center gap-2'>
+              <Button asChild variant={'secondary'}>
+                <Link href={`/me/lists/update/${data.id}`}>Update</Link>
+              </Button>
+              <DeleteButton data={data} />
+            </div>
+
+            {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
           </div>
         </div>
       </div>

@@ -41,6 +41,7 @@ import { List } from '@prisma/client';
 import { createList, updateList } from '@/app/(me)/me/lists/actions';
 import React from 'react';
 import { useParams } from 'next/navigation';
+import { Separator } from '@/components/ui/separator';
 
 interface ListFormProps {
   data?: List | null;
@@ -90,7 +91,6 @@ export default function ListForm({ data }: ListFormProps) {
 
   const getData = React.useCallback(async () => {
     const get = data;
-    console.log(get);
 
     if (get) {
       setSelectedImage(get.cover);
@@ -256,7 +256,7 @@ export default function ListForm({ data }: ListFormProps) {
           onSubmit={form.handleSubmit(onSubmit, (error) => {
             console.log(error);
           })}
-          className='space-y-20'
+          className='space-y-10'
         >
           <FormSection
             title='1. Info Kendaraan'
@@ -352,6 +352,8 @@ export default function ListForm({ data }: ListFormProps) {
               </div>
             </div>
           </FormSection>
+
+          <Separator />
 
           <FormSection
             title='2. Info Servis'
@@ -466,14 +468,19 @@ export default function ListForm({ data }: ListFormProps) {
             />
           </FormSection>
           <div className='flex justify-end'>
-            <Button type='submit' size={'lg'} disabled={isSubmitting}>
+            <Button
+              type='submit'
+              size={'lg'}
+              disabled={isSubmitting}
+              className='max-sm:w-full'
+            >
               {data
                 ? isSubmitting
                   ? 'Menyimpan...'
                   : 'Simpan'
                 : isSubmitting
-                  ? 'Membuat...'
-                  : 'Buat'}
+                  ? 'Tunggu...'
+                  : 'Tambah'}
             </Button>
           </div>
         </form>

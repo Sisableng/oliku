@@ -12,13 +12,13 @@ export default function CreatePage() {
   return (
     <div className='space-y-10 md:space-y-20'>
       <section className='space-y-6'>
-        <Button asChild variant={'ghost'}>
+        {/* <Button asChild variant={'ghost'}>
           <Link href={'/me'} className='flex items-center gap-2'>
             <ChevronLeft size={16} />
             <span>Kembali</span>
           </Link>
-        </Button>
-        <h1 className='text-4xl font-bold'>Buat List</h1>
+        </Button> */}
+        <h1 className='text-3xl font-bold'>Tambah Kendaraan</h1>
       </section>
       <ListForm />
     </div>

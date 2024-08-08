@@ -1,7 +1,7 @@
 'use client';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Button } from '../ui/button';
-import { Bike, Car, Filter, Search } from 'lucide-react';
+import { Bike, Car, Filter, LoaderCircle, Search } from 'lucide-react';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import { Input } from '../ui/input';
@@ -17,7 +17,10 @@ import { useDebounce } from 'use-debounce';
 
 export default function FilterLists() {
   const [query, setQuery] = useState('');
-  const [debouncedValue] = useDebounce(query, 1000);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const delay: number = 1000;
+  const [debouncedValue] = useDebounce(query, delay);
 
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -51,6 +54,16 @@ export default function FilterLists() {
 
   useEffect(() => {
     if (debouncedValue.length > 0) {
+      setIsLoading(true);
+
+      setTimeout(() => {
+        setIsLoading(false);
+      }, delay);
+    }
+  }, [debouncedValue, delay]);
+
+  useEffect(() => {
+    if (debouncedValue.length > 0) {
       router.push(pathname + '?' + createQueryString('search', debouncedValue));
     } else if (searchParams.get('filter')) {
       router.push(`/me?filter=${searchParams.get('filter')}`);
@@ -63,7 +76,11 @@ export default function FilterLists() {
     <div className='flex items-center gap-4 md:justify-between'>
       <div className='relative flex-1'>
         <div className='absolute left-2.5 top-2.5 text-muted-foreground'>
-          <Search size={16} />
+          {isLoading ? (
+            <LoaderCircle size={16} className='animate-spin text-primary' />
+          ) : (
+            <Search size={16} />
+          )}
         </div>
         <Input
           type='text'
@@ -71,7 +88,7 @@ export default function FilterLists() {
           onChange={(e) => {
             setQuery(e.target.value);
           }}
-          placeholder='Cari...'
+          placeholder='Cari Kendaraan...'
           className='rounded-l-full rounded-r-full pl-8 md:max-w-lg'
         />
       </div>

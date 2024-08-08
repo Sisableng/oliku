@@ -44,14 +44,16 @@ const ListCard = ({ data, onUpdate, onDelete }: ListCardProps) => {
   });
   return (
     <div className='grid grid-cols-1 gap-4 md:grid-cols-3'>
-      <div className='h-full max-h-52 w-full overflow-hidden rounded-xl bg-muted dark:bg-card md:max-h-60'>
-        <Image
-          src={optimized(data.cover ?? '', 250)}
-          width={500}
-          height={500}
-          alt='cover image'
-          className='h-full w-full object-contain'
-        />
+      <div className='group h-full max-h-52 w-full overflow-hidden rounded-xl bg-muted dark:bg-card md:max-h-60'>
+        <Link href={`/me/lists/${data.id}`}>
+          <Image
+            src={optimized(data.cover ?? '', 250)}
+            width={500}
+            height={500}
+            alt='cover image'
+            className='h-full w-full object-contain transition-transform ease-in-out group-hover:scale-110'
+          />
+        </Link>
       </div>
       <Card className='relative md:col-span-2'>
         <CardHeader className='relative'>
@@ -75,7 +77,11 @@ const ListCard = ({ data, onUpdate, onDelete }: ListCardProps) => {
                   <EllipsisVertical size={20} />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent>
+              <DropdownMenuContent
+                side='bottom'
+                align='end'
+                className='flex flex-col gap-1 bg-border'
+              >
                 <DropdownMenuItem asChild className='cursor-pointer'>
                   <Link href={`/me/lists/${data.id}`} passHref>
                     Detail
@@ -88,7 +94,7 @@ const ListCard = ({ data, onUpdate, onDelete }: ListCardProps) => {
                   Update
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                  className='cursor-pointer text-destructive focus:text-destructive'
+                  className='cursor-pointer bg-destructive focus:text-destructive-foreground'
                   onClick={() => onDelete(data.id)}
                 >
                   Hapus
@@ -98,7 +104,7 @@ const ListCard = ({ data, onUpdate, onDelete }: ListCardProps) => {
             </DropdownMenu>
           </div>
         </CardHeader>
-        <CardContent className='grid grid-cols-2 gap-6'>
+        <CardContent className='grid grid-cols-2 gap-8'>
           <ItemCard title='Merek Oli' className='max-sm:col-span-2'>
             <div className='flex items-center gap-2'>
               <Wrench size={16} className='text-muted-foreground' />
@@ -117,8 +123,10 @@ const ListCard = ({ data, onUpdate, onDelete }: ListCardProps) => {
               <p className='ordinal'>{data.lastKm}Km</p>
             </div>
           </ItemCard>
+        </CardContent>
+        {/* <CardFooter className='justify-end'>
           <div>
-            <Button asChild variant={'ghost'}>
+            <Button asChild variant={'secondary'} className=''>
               <Link
                 href={`/me/lists/${data.id}`}
                 className='flex items-center gap-2 text-primary'
@@ -128,7 +136,7 @@ const ListCard = ({ data, onUpdate, onDelete }: ListCardProps) => {
               </Link>
             </Button>
           </div>
-        </CardContent>
+        </CardFooter> */}
       </Card>
     </div>
   );

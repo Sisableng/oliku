@@ -56,7 +56,7 @@ export default async function RootLayout({
             <ToastProvider />
             <Navbar />
             <FlyoutMenu />
-            <main className='container mt-20 py-10 pb-32'>{children}</main>
+            <main className='container mt-20 pb-32 pt-10'>{children}</main>
           </ThemeProvider>
         </AuthProvider>
       </body>

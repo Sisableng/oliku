@@ -187,8 +187,10 @@ export default function Lists({ data }: ListsProps) {
             );
           })
         ) : (
-          <div>
-            <p>Tidak ada lists yang ditemukan</p>
+          <div className='flex h-60 flex-col items-center justify-center'>
+            <p className='italic text-muted-foreground'>
+              Tidak ada data yang ditemukan
+            </p>
           </div>
         )}
       </div>

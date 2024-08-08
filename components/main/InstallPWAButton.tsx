@@ -2,8 +2,6 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { MonitorDown } from 'lucide-react';
-import { useSession } from 'next-auth/react';
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 export default function InstallPWAButton() {

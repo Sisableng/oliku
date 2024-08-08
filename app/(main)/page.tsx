@@ -6,23 +6,19 @@ import Link from 'next/link';
 export default function Home() {
   return (
     <div className='space-y-20'>
-      <section
-        className='relative h-screen bg-cover bg-fixed bg-center bg-no-repeat'
-        style={{
-          backgroundImage: "url('/assets/bg.svg')",
-        }}
-      >
-        <div className='absolute inset-0 z-10 mx-auto grid max-w-4xl place-content-center space-y-8 text-center'>
-          <h1 className='text-4xl font-bold lg:text-6xl'>
+      <section className='relative h-screen overflow-hidden bg-background'>
+        <div className='container absolute inset-0 z-10 mx-auto grid place-content-center space-y-8 md:max-w-4xl md:text-center'>
+          <h1 className='text-5xl font-bold leading-snug lg:text-6xl'>
             Selamat datang di <span className='text-primary'>Oliku</span>!
           </h1>
-          <p className='mx-auto text-muted-foreground max-sm:px-10 max-sm:text-sm md:max-w-lg md:font-semibold'>
+          <p className='text-muted-foreground max-sm:text-sm md:mx-auto md:max-w-lg'>
             Oliku adalah aplikasi pengingat ganti oli buat kamu yang sering
             lupa, Oliku dibuat dengan Next.js dan Tailwind CSS.
           </p>
+
           <InstallPWAButton />
 
-          <div className='flex items-center justify-center gap-4 px-10'>
+          <div className='flex items-center gap-4 md:justify-center md:px-10'>
             <Button asChild size={'icon'} variant={'ghost'}>
               <Link href='https://github.com/Sisableng' target='_blank'>
                 <Github size={18} />
@@ -44,8 +40,10 @@ export default function Home() {
           </div>
         </div>
 
-        <div className='pointer-events-none absolute inset-x-0 top-0 h-52 bg-gradient-to-b from-background to-transparent' />
-        <div className='pointer-events-none absolute inset-x-0 bottom-0 h-52 bg-gradient-to-t from-background to-transparent' />
+        {/* <div className='pointer-events-none absolute inset-x-0 top-0 h-52 bg-gradient-to-b from-background to-transparent' />
+        <div className='pointer-events-none absolute inset-x-0 bottom-0 h-52 bg-gradient-to-t from-background to-transparent' /> */}
+
+        <div className='absolute bottom-0 left-0 right-0 top-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]'></div>
       </section>
     </div>
   );

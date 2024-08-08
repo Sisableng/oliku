@@ -8,8 +8,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-
-import { Input } from '@/components/ui/input';
 import { getInitialName } from '@/utils/getInitialName';
 import { DropdownMenuArrow } from '@radix-ui/react-dropdown-menu';
 import { signOut, useSession } from 'next-auth/react';
@@ -51,14 +49,16 @@ export default function Navbar() {
       )}
     >
       <nav className='container flex h-20 items-center justify-between gap-8'>
-        <Link href={'/me'} className='flex items-center gap-2'>
+        <Link href={'/me'} className='group flex items-center gap-2'>
           <Image
             src={'/assets/favicon.ico'}
             width={32}
             height={32}
             alt='icon'
           />
-          <h4 className='text-2xl font-bold'>Oliku</h4>
+          <h4 className='text-2xl font-bold transition-colors ease-in-out group-hover:text-primary'>
+            Oliku
+          </h4>
         </Link>
         <div className='flex items-center gap-4 rounded-l-full rounded-r-full bg-card p-2 shadow-lg'>
           <p className='pl-3 text-sm text-muted-foreground max-sm:hidden'>

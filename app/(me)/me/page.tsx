@@ -23,8 +23,8 @@ export default async function MeHomePage({ searchParams }: Props) {
   );
 
   return (
-    <section className='space-y-10'>
-      <h1 className='text-4xl font-bold'>List Kamu</h1>
+    <section className='space-y-8'>
+      {/* <h1 className='text-2xl font-bold'>Kendaraan</h1> */}
       <div className='space-y-10'>
         <div>
           <FilterLists />
